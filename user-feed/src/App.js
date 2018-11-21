@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import { auth, provider } from './firebase'
 import './App.css'
+import Main from './components/Main'
 
 const styles = theme => ({
     container: {
@@ -22,14 +23,16 @@ const styles = theme => ({
 class App extends Component {
 
     state = {
-        user: null
+        user: null,
+        authenticated: false
     }
 
     login = () => {
         auth.signInWithPopup(provider)
             .then((result) => {
                 this.setState({
-                    user: result.user
+                    user: result.user,
+                    authenticated: true
                 })
             })
     }
@@ -38,32 +41,40 @@ class App extends Component {
         auth.signOut()
             .then(() => {
                 this.setState({
-                    user: null
+                    user: null,
+                    authenticated: false
                 })
             })
     }
 
-    render() {
-        const { classes } = this.props
-        return (
-            <div className='app'>
-                <AppBar position="static" color="default">
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit">
-                            App Title
-                        </Typography>
-                        <form className={classes.container} noValidate autoComplete='off'>
-                            {this.state.user ? <Button variant="outlined" className={classes.button} onClick={this.logout}>Log Out</Button> : <Button variant="outlined" className={classes.button} onClick={this.login}>Log In</Button>}
-                        </form>
-                    </Toolbar>
-                </AppBar>
-            </div>
-        )
+    componentDidMount = () => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({ user, authenticated: true })
+            }
+        })
     }
-}
 
-App.propTypes = {
-    classes: PropTypes.object.isRequired
-}
+        render() {
+            const { classes } = this.props
+            return (
+                <div className='app'>
+                    <AppBar position="static" color="default">
+                        <Toolbar>
+                            <Typography variant="h6" color="inherit">App Title</Typography>
+                            <form className={classes.container} noValidate autoComplete='off'>
+                                {this.state.user ? <Button variant="outlined" className={classes.button} onClick={this.logout}>Log Out</Button> : <Button variant="outlined" className={classes.button} onClick={this.login}>Log In</Button>}
+                            </form>
+                        </Toolbar>
+                    </AppBar>
+                    <Main authenticated={this.state.authenticated} />
+                </div>
+            )
+        }
+    }
 
-export default withStyles(styles)(App)
+    App.propTypes = {
+        classes: PropTypes.object.isRequired
+    }
+
+    export default withStyles(styles)(App)
