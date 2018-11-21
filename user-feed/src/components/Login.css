@@ -1,0 +1,3 @@
+input[type="text"]#username:after {
+    border-bottom: 2px solid #ffffff !important;
+}
