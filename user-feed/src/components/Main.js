@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 
 const styles = () => ({
     container: {
-        display: 'flex'
+        display: 'flex',
+        height: 'calc(100% - 64px)',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
@@ -17,7 +21,8 @@ class Main extends Component {
 
     componentWillReceiveProps = (prop) => {
         this.setState({
-            loggedIn: prop.authenticated
+            loggedIn: prop.authenticated,
+            user: prop.user
         })
     }
 
@@ -27,9 +32,13 @@ class Main extends Component {
         return (
             <div className={classes.container}>
                 {this.state.loggedIn ? 
-                    <p>Logged In</p> 
+                <Typography variant="h6" gutterBottom>
+                    Welcome, { this.state.user.displayName }
+                </Typography>
                 : 
-                <p>Ope, nothin to see here</p>
+                <Typography variant="h6" gutterBottom>
+                    Ope, nothing to see here
+                </Typography>
                 }
             </div>
         )

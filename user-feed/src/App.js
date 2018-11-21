@@ -61,13 +61,13 @@ class App extends Component {
                 <div className='app'>
                     <AppBar position="static" color="default">
                         <Toolbar>
-                            <Typography variant="h6" color="inherit">App Title</Typography>
+                            <Typography variant="h6" color="inherit">anon.io</Typography>
                             <form className={classes.container} noValidate autoComplete='off'>
                                 {this.state.user ? <Button variant="outlined" className={classes.button} onClick={this.logout}>Log Out</Button> : <Button variant="outlined" className={classes.button} onClick={this.login}>Log In</Button>}
                             </form>
                         </Toolbar>
                     </AppBar>
-                    <Main authenticated={this.state.authenticated} />
+                    <Main authenticated={this.state.authenticated} user={this.state.user}/>
                 </div>
             )
         }
