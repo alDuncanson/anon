@@ -33,11 +33,17 @@ const styles = (theme) => ({
         height: 'calc(100% - 42px)',
         borderRight: '1px solid #c5c5c5'
     },
+    welcome: {
+        width: '70%',
+        margin: '0 auto'
+    },
     postField: {
-        width: '100%'
+        width: '70%',
+        margin: '16px auto'
     },
     postButton: {
-        width: '100%'
+        width: '70%',
+        margin: '0 auto'
     }
 })
 
@@ -77,7 +83,7 @@ class Main extends Component {
                     <Grid container>
                         <Grid item xs={4}>
                             <div className={classes.postContainer}>
-                                <Typography variant='h6' gutterBottom>Welcome, {this.state.user.displayName}</Typography>
+                                <Typography variant='h6' gutterBottom className={classes.welcome}>Welcome, {this.state.user.displayName}</Typography>
                                 <Avatar alt='Profile Photo' src={this.state.user.photoURL} className={classes.avatar} />
                                 <TextField id='post-field' label="What's on your mind" multiline rowsMax='4' className={classes.postField} margin='normal' value={this.state.post} onChange={this.handleChange}/>
                                 <Button id='post-button' variant='outlined' className={classes.postButton} onClick={this.handleSubmit}>Post</Button>
