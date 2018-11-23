@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
+import MessageFeed from './MessageFeed'
+import firebase from '../firebase'
 
 const styles = (theme) => ({
     container: {
@@ -43,7 +45,8 @@ class Main extends Component {
 
     state = {
         user: null,
-        loggedIn: false
+        loggedIn: false,
+        post: ''
     }
 
     componentWillReceiveProps = (prop) => {
@@ -51,6 +54,18 @@ class Main extends Component {
             loggedIn: prop.authenticated,
             user: prop.user
         })
+    }
+
+    handleChange = (event) => {
+        this.setState({post: event.target.value})
+    }
+
+    handleSubmit = () => {
+        const posts = firebase.database().ref('posts')
+        const post = {
+            post: this.state.post
+        }
+        posts.push(post)
     }
 
     render() {
@@ -64,24 +79,17 @@ class Main extends Component {
                             <div className={classes.postContainer}>
                                 <Typography variant='h6' gutterBottom>Welcome, {this.state.user.displayName}</Typography>
                                 <Avatar alt='Profile Photo' src={this.state.user.photoURL} className={classes.avatar} />
-                                <TextField
-                                    id='post-field'
-                                    label="What's on your mind"
-                                    multiline
-                                    rowsMax='4'
-                                    className={classes.postField}
-                                    margin='normal'
-                                />
-                                <Button id='post-button' variant='outlined' className={classes.postButton}>Post</Button>
+                                <TextField id='post-field' label="What's on your mind" multiline rowsMax='4' className={classes.postField} margin='normal' value={this.state.post} onChange={this.handleChange}/>
+                                <Button id='post-button' variant='outlined' className={classes.postButton} onClick={this.handleSubmit}>Post</Button>
                             </div>
                         </Grid>
-                        <Grid item xs={8}></Grid>
+                        <Grid item xs={8}>
+                            <MessageFeed/>
+                        </Grid>
                     </Grid>
                     :
                     <div className={classes.center}>
-                        <Typography variant='h6' gutterBottom>
-                            Ope, nothing to see here
-                    </Typography>
+                        <Typography variant='h6' gutterBottom>Ope, nothing to see here</Typography>
                     </div>
                 }
             </div>
