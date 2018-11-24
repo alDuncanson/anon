@@ -34,8 +34,9 @@ const styles = (theme) => ({
         borderRight: '1px solid #c5c5c5'
     },
     welcome: {
-        width: '70%',
-        margin: '0 auto'
+        width: '85%',
+        margin: '0 auto',
+        textAlign: 'center'
     },
     postField: {
         width: '70%',
