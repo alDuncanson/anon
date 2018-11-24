@@ -1,6 +1,6 @@
 # Anon
 
-This is a simple social media application built with [ReactJS](https://reactjs.org/), using [Firebase's Realtime Database](https://firebase.google.com/docs/database/), and hosted using continuous integration with [Netlify}(https://www.netlify.com/).
+This is a simple social media application built with [ReactJS](https://reactjs.org/), using [Firebase's Realtime Database](https://firebase.google.com/docs/database/), and hosted using continuous integration with [Netlify](https://www.netlify.com/).
 
 ## To run locally
 
