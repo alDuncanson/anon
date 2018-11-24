@@ -25,14 +25,22 @@ const styles = () => ({
     listItem: {
         overflowX: 'hidden'
     },
-    hover: {
-        boxShadow: '2px 2px 2px grey',
+    likeButton: {
+        boxShadow: '2px 2px 2px #c5c5c5',
         borderRadius: '3px',
         padding: '5px',
         
         '&:hover': {
+            boxShadow: '3px 3px 3px #c5c5c5',
             cursor: 'pointer'
+        },
+
+        '&:active': {
+            boxShadow: '1px 1px 1px #c5c5c5'
         }
+    },
+    likes: {
+        marginLeft: '13px'
     }
 })
 
@@ -47,13 +55,21 @@ class MessageFeed extends Component {
 
             for (let post in posts) {
                 newState.unshift({
-                    post: posts[post].post
+                    post: posts[post].post,
+                    id: post,
+                    likes: posts[post].likes
                 })
             }
             this.setState({
                 posts: newState
             })
         })
+    }
+
+    like = (key, index, numOfLikes) => {
+        let newLikes = numOfLikes + 1
+
+        firebase.database().ref(`posts/${key}`).update({ likes: newLikes })
     }
 
     state = {
@@ -68,10 +84,11 @@ class MessageFeed extends Component {
                 { 
                     this.state.posts.map((post, index) => {
                         return (
-                            <Paper key={index} className={classes.paper} elevation={1}>
+                            <Paper key={post.id} className={classes.paper} elevation={1}>
                                 <ListItem className={classes.listItem}>
                                     <ListItemText primary={`${post.post}`}/>
-                                    <Like className={classes.hover}/>
+                                    <Like className={classes.likeButton} onClick={() => this.like(post.id, index, post.likes)}/>
+                                    <p className={classes.likes}>{post.likes}</p>
                                 </ListItem>
                             </Paper>
                         )

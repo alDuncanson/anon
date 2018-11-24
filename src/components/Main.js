@@ -55,8 +55,7 @@ class Main extends Component {
     state = {
         user: null,
         loggedIn: false,
-        post: '',
-        postId: 0
+        post: ''
     }
 
     componentWillReceiveProps = (prop) => {
@@ -73,7 +72,8 @@ class Main extends Component {
     handleSubmit = () => {
         const posts = firebase.database().ref('posts')
         const post = {
-            post: this.state.post
+            post: this.state.post,
+            likes: 0
         }
 
         this.setState({
