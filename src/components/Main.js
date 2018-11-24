@@ -12,7 +12,8 @@ import firebase from '../firebase'
 const styles = (theme) => ({
     container: {
         display: 'flex',
-        height: 'calc(100% - 64px)'
+        height: 'calc(100% - 64px)',
+        overflowX: 'hidden'
     },
     center: {
         display: 'flex',
@@ -31,11 +32,13 @@ const styles = (theme) => ({
         flexDirection: 'column',
         padding: '21px',
         height: 'calc(100% - 42px)',
-        borderRight: '1px solid #c5c5c5'
+        borderRight: '1px solid #c5c5c5',
+        position: 'fixed'
     },
     welcome: {
-        width: '70%',
-        margin: '0 auto'
+        width: '85%',
+        margin: '0 auto',
+        textAlign: 'center'
     },
     postField: {
         width: '70%',
@@ -69,8 +72,14 @@ class Main extends Component {
     handleSubmit = () => {
         const posts = firebase.database().ref('posts')
         const post = {
-            post: this.state.post
+            post: this.state.post,
+            likes: 0
         }
+
+        this.setState({
+            post: ''
+        })
+
         posts.push(post)
     }
 
