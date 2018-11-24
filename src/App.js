@@ -74,7 +74,7 @@ class App extends Component {
         const { classes } = this.props
         return (
             <div className='app'>
-                <AppBar position='static' color='default'>
+                <AppBar position='static' color='default' elevation={2}>
                     <Toolbar>
                         <Typography variant='h6' color='inherit'>anon.io</Typography>
                         <form className={classes.container} noValidate autoComplete='off'>

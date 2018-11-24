@@ -12,7 +12,8 @@ import firebase from '../firebase'
 const styles = (theme) => ({
     container: {
         display: 'flex',
-        height: 'calc(100% - 64px)'
+        height: 'calc(100% - 64px)',
+        overflowX: 'hidden'
     },
     center: {
         display: 'flex',
@@ -31,7 +32,8 @@ const styles = (theme) => ({
         flexDirection: 'column',
         padding: '21px',
         height: 'calc(100% - 42px)',
-        borderRight: '1px solid #c5c5c5'
+        borderRight: '1px solid #c5c5c5',
+        position: 'fixed'
     },
     welcome: {
         width: '85%',
@@ -53,7 +55,8 @@ class Main extends Component {
     state = {
         user: null,
         loggedIn: false,
-        post: ''
+        post: '',
+        postId: 0
     }
 
     componentWillReceiveProps = (prop) => {
@@ -72,6 +75,11 @@ class Main extends Component {
         const post = {
             post: this.state.post
         }
+
+        this.setState({
+            post: ''
+        })
+
         posts.push(post)
     }
 

@@ -5,9 +5,35 @@ import firebase from '../firebase'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import Paper from '@material-ui/core/Paper'
+import Like from '@material-ui/icons/ThumbUp';
 
-const styles = (theme) => ({
-    
+const styles = () => ({
+    list: {
+        width: '100%',
+        height: '100%',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+    },
+    paper: {
+        width: '80%',
+        padding: '21px',
+        margin: '21px auto 21px 0'
+    },
+    listItem: {
+        overflowX: 'hidden'
+    },
+    hover: {
+        boxShadow: '2px 2px 2px grey',
+        borderRadius: '3px',
+        padding: '5px',
+        
+        '&:hover': {
+            cursor: 'pointer'
+        }
+    }
 })
 
 class MessageFeed extends Component {
@@ -35,16 +61,19 @@ class MessageFeed extends Component {
     }
 
     render() {
-        //const { classes } = this.props
+        const { classes } = this.props
 
         return (
-            <List>
+            <List className={classes.list}>
                 { 
-                    this.state.posts.map((post) => {
+                    this.state.posts.map((post, index) => {
                         return (
-                            <ListItem>
-                                <ListItemText primary={`${post.post}`}/>
-                            </ListItem>
+                            <Paper key={index} className={classes.paper} elevation={1}>
+                                <ListItem className={classes.listItem}>
+                                    <ListItemText primary={`${post.post}`}/>
+                                    <Like className={classes.hover}/>
+                                </ListItem>
+                            </Paper>
                         )
                     })
                 }
