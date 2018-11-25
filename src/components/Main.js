@@ -8,6 +8,9 @@ import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
 import MessageFeed from './MessageFeed'
 import firebase from '../firebase'
+import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 
 const styles = (theme) => ({
     container: {
@@ -47,6 +50,9 @@ const styles = (theme) => ({
     postButton: {
         width: '70%',
         margin: '0 auto'
+    },
+    close: {
+        padding: theme.spacing.unit / 2,
     }
 })
 
@@ -55,7 +61,8 @@ class Main extends Component {
     state = {
         user: null,
         loggedIn: false,
-        post: ''
+        post: '',
+        open: false
     }
 
     componentWillReceiveProps = (prop) => {
@@ -66,21 +73,36 @@ class Main extends Component {
     }
 
     handleChange = (event) => {
-        this.setState({post: event.target.value})
+        this.setState({ post: event.target.value })
     }
 
     handleSubmit = () => {
         const posts = firebase.database().ref('posts')
-        const post = {
-            post: this.state.post,
-            likes: 0
+        if (this.state.post !== '') {
+            const post = {
+                post: this.state.post,
+                likes: 0
+            }
+            posts.push(post)
+        } else {
+            this.handleOpen()
         }
 
         this.setState({
             post: ''
         })
+    }
 
-        posts.push(post)
+    handleOpen = () => {
+        this.setState({ open: true })
+    }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+
+        this.setState({ open: false })
     }
 
     render() {
@@ -94,13 +116,37 @@ class Main extends Component {
                             <div className={classes.postContainer}>
                                 <Typography variant='h6' gutterBottom className={classes.welcome}>Welcome, {this.state.user.displayName}</Typography>
                                 <Avatar alt='Profile Photo' src={this.state.user.photoURL} className={classes.avatar} />
-                                <TextField id='post-field' label="What's on your mind" multiline rowsMax='4' className={classes.postField} margin='normal' value={this.state.post} onChange={this.handleChange}/>
+                                <TextField id='post-field' label="What's on your mind" multiline rowsMax='8' className={classes.postField} margin='normal' value={this.state.post} onChange={this.handleChange} />
                                 <Button id='post-button' variant='outlined' className={classes.postButton} onClick={this.handleSubmit}>Post</Button>
                             </div>
                         </Grid>
                         <Grid item xs={8}>
-                            <MessageFeed/>
+                            <MessageFeed />
                         </Grid>
+                        <Snackbar
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            open={this.state.open}
+                            autoHideDuration={4000}
+                            onClose={this.handleClose}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id='message-id'>Textfield is empty</span>}
+                            action={[
+                                <IconButton
+                                    key='close'
+                                    aria-label='Close'
+                                    color='inherit'
+                                    className={classes.close}
+                                    onClick={this.handleClose}
+                                >
+                                    <CloseIcon />
+                                </IconButton>
+                            ]}
+                        />
                     </Grid>
                     :
                     <div className={classes.center}>
