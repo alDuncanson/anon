@@ -6,7 +6,8 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Paper from '@material-ui/core/Paper'
-import Like from '@material-ui/icons/ThumbUp';
+import Like from '@material-ui/icons/ThumbUp'
+import Close from '@material-ui/icons/Close'
 
 const styles = () => ({
     list: {
@@ -24,6 +25,20 @@ const styles = () => ({
     },
     listItem: {
         overflowX: 'hidden'
+    },
+    closeButton: {
+        boxShadow: '2px 2px 2px #c5c5c5',
+        borderRadius: '3px',
+        padding: '5px',
+        
+        '&:hover': {
+            boxShadow: '3px 3px 3px #c5c5c5',
+            cursor: 'pointer'
+        },
+
+        '&:active': {
+            boxShadow: '1px 1px 1px #c5c5c5'
+        }
     },
     likeButton: {
         boxShadow: '2px 2px 2px #c5c5c5',
@@ -56,8 +71,9 @@ class MessageFeed extends Component {
             for (let post in posts) {
                 newState.unshift({
                     post: posts[post].post,
-                    id: post,
-                    likes: posts[post].likes
+                    email: posts[post].email,
+                    likes: posts[post].likes,
+                    id: post
                 })
             }
             this.setState({
@@ -66,14 +82,25 @@ class MessageFeed extends Component {
         })
     }
 
-    like = (key, index, numOfLikes) => {
+    like = (key, numOfLikes) => {
         let newLikes = numOfLikes + 1
 
         firebase.database().ref(`posts/${key}`).update({ likes: newLikes })
     }
 
+    close = (key) => {
+        firebase.database().ref(`posts/${key}`).remove()
+    }
+
     state = {
-        posts: []
+        posts: [],
+        user: null
+    }
+
+    componentWillReceiveProps = (prop) => {
+        this.setState({
+            user: prop.user
+        })
     }
 
     render() {
@@ -87,7 +114,10 @@ class MessageFeed extends Component {
                             <Paper key={post.id} className={classes.paper} elevation={1}>
                                 <ListItem className={classes.listItem}>
                                     <ListItemText primary={`${post.post}`}/>
-                                    <Like className={classes.likeButton} onClick={() => this.like(post.id, index, post.likes)}/>
+                                    {this.state.user ? 
+                                        this.state.user.email === post.email ? <Close className={classes.closeButton} onClick={() => this.close(post.id, this.state.user.email)}/> : null   
+                                    : null}
+                                    <Like className={classes.likeButton} onClick={() => this.like(post.id, post.likes)}/>
                                     <p className={classes.likes}>{post.likes}</p>
                                 </ListItem>
                             </Paper>

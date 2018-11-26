@@ -81,7 +81,8 @@ class Main extends Component {
         if (this.state.post !== '') {
             const post = {
                 post: this.state.post,
-                likes: 0
+                likes: 0,
+                email: this.state.user.email
             }
             posts.push(post)
         } else {
@@ -121,7 +122,7 @@ class Main extends Component {
                             </div>
                         </Grid>
                         <Grid item xs={8}>
-                            <MessageFeed />
+                            <MessageFeed user={this.state.user}/>
                         </Grid>
                         <Snackbar
                             anchorOrigin={{
