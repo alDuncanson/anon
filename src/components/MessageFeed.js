@@ -65,8 +65,8 @@ class MessageFeed extends Component {
         const postRef = firebase.database().ref('posts')
 
         postRef.on('value', (snapshot) => {
-            let posts = snapshot.val()
-            let newState = []
+            const posts = snapshot.val()
+            const newState = []
 
             for (let post in posts) {
                 newState.unshift({
@@ -82,15 +82,9 @@ class MessageFeed extends Component {
         })
     }
 
-    like = (key, numOfLikes) => {
-        let newLikes = numOfLikes + 1
+    like = (key, numOfLikes) => firebase.database().ref(`posts/${key}`).update({ likes: numOfLikes += 1 })
 
-        firebase.database().ref(`posts/${key}`).update({ likes: newLikes })
-    }
-
-    close = (key) => {
-        firebase.database().ref(`posts/${key}`).remove()
-    }
+    close = (key) => firebase.database().ref(`posts/${key}`).remove()
 
     state = {
         posts: [],
