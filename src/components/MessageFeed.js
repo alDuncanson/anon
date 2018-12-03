@@ -10,18 +10,10 @@ import Like from '@material-ui/icons/ThumbUp'
 import Close from '@material-ui/icons/Close'
 
 const styles = () => ({
-    list: {
-        width: '100%',
-        height: '100%',
-        margin: '0 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between'
-    },
     paper: {
-        width: '80%',
-        padding: '21px',
-        margin: '21px auto 21px 0'
+        width: '75%',
+        margin: '21px auto 21px auto',
+        padding: '21px'
     },
     listItem: {
         overflowX: 'hidden'
@@ -101,7 +93,7 @@ class MessageFeed extends Component {
         const { classes } = this.props
 
         return (
-            <List className={classes.list}>
+            <List>
                 { 
                     this.state.posts.map((post, index) => {
                         return (

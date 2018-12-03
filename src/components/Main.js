@@ -35,8 +35,7 @@ const styles = (theme) => ({
         flexDirection: 'column',
         padding: '21px',
         height: 'calc(100% - 42px)',
-        borderRight: '1px solid #c5c5c5',
-        position: 'fixed'
+        borderRight: '1px solid #c5c5c5'
     },
     welcome: {
         width: '85%',
@@ -113,41 +112,41 @@ class Main extends Component {
             <div className={classes.container}>
                 {this.state.loggedIn ?
                     <Grid container>
-                        <Grid item xs={4}>
+                        <Grid item xs={12} md={4}>
                             <div className={classes.postContainer}>
                                 <Typography variant='h6' gutterBottom className={classes.welcome}>Welcome, {this.state.user.displayName}</Typography>
                                 <Avatar alt='Profile Photo' src={this.state.user.photoURL} className={classes.avatar} />
                                 <TextField id='post-field' label="What's on your mind" multiline rowsMax='8' className={classes.postField} margin='normal' value={this.state.post} onChange={this.handleChange} />
                                 <Button id='post-button' variant='outlined' className={classes.postButton} onClick={this.handleSubmit}>Post</Button>
                             </div>
+                            <Snackbar
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                open={this.state.open}
+                                autoHideDuration={4000}
+                                onClose={this.handleClose}
+                                ContentProps={{
+                                    'aria-describedby': 'message-id',
+                                }}
+                                message={<span id='message-id'>Textfield is empty</span>}
+                                action={[
+                                    <IconButton
+                                        key='close'
+                                        aria-label='Close'
+                                        color='inherit'
+                                        className={classes.close}
+                                        onClick={this.handleClose}
+                                    >
+                                        <CloseIcon />
+                                    </IconButton>
+                                ]}
+                            />
                         </Grid>
-                        <Grid item xs={8}>
-                            <MessageFeed user={this.state.user}/>
+                        <Grid item xs={12} md={8}>
+                            <MessageFeed user={this.state.user} />
                         </Grid>
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            open={this.state.open}
-                            autoHideDuration={4000}
-                            onClose={this.handleClose}
-                            ContentProps={{
-                                'aria-describedby': 'message-id',
-                            }}
-                            message={<span id='message-id'>Textfield is empty</span>}
-                            action={[
-                                <IconButton
-                                    key='close'
-                                    aria-label='Close'
-                                    color='inherit'
-                                    className={classes.close}
-                                    onClick={this.handleClose}
-                                >
-                                    <CloseIcon />
-                                </IconButton>
-                            ]}
-                        />
                     </Grid>
                     :
                     <div className={classes.center}>
