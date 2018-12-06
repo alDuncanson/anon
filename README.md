@@ -2,7 +2,7 @@
 
 This is a simple social media application built with [ReactJS](https://reactjs.org/), using [Firebase's Realtime Database](https://firebase.google.com/docs/database/), and hosted with [Netlify](https://www.netlify.com/).
 
-!(Anon.io screenshot)[https://lh3.googleusercontent.com/bG8nFIu11tbE_fsi6b0mknSXnn6ateZ2KFFD8Sr9Rq_areUCWvFJNwfl9SRmXy3DNyTM4W_Yesv0k62whGGi6HWD0Gsy8_3prletGQUKHrVAGGX3ddhenk8pTFHgkjUZec8my9_APw=w2400 "Anon.io screenshot"]
+![Anon.io screenshot](https://lh3.googleusercontent.com/bG8nFIu11tbE_fsi6b0mknSXnn6ateZ2KFFD8Sr9Rq_areUCWvFJNwfl9SRmXy3DNyTM4W_Yesv0k62whGGi6HWD0Gsy8_3prletGQUKHrVAGGX3ddhenk8pTFHgkjUZec8my9_APw=w2400 "Anon.io screenshot")
 
 ## To run locally
 
