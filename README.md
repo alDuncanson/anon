@@ -7,4 +7,4 @@ This is a simple social media application built with [ReactJS](https://reactjs.o
 Open a terminal and run the command `git clone https://github.com/alDuncanson/anon.git`. Move into the directory `cd anon`. Then run `npm i` followed by `npm start` and your default browser should spin up the application on localhost.
 
 ## Sidenote
-Please don't use my firebase API key, you can get your own for free the [Firebase console](https://console.firebase.google.com)
+Please don't use my firebase API key, you can get your own for free using the [Firebase console](https://console.firebase.google.com)
